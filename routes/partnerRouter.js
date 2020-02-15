@@ -16,7 +16,7 @@ partnerRouter.route('/')
     res.end('Will send all the partners to you');
 })
 .post((req, res) => {
-    res.end(`Will add the partners: ${req.body.name} with description: ${req.body.description}`);
+    res.end(`Will add the partner: ${req.body.name} with description: ${req.body.description}`);
 })
 .put((req, res) => {
     res.statusCode = 403;
@@ -26,24 +26,26 @@ partnerRouter.route('/')
     res.end('Deleting all partners');
 });
 
-app.get('/partners/:partnerId', (req, res) => {
-    res.end(`Will send details of the partner: ${req.params.partnerId} to you`);
-});
 
-app.post('/partners/:partnerId', (req, res) => {
+partnerRouter.route('/:partnerId')
+
+.get((req, res) => {
+    res.end(`Will send details of the partner: ${req.params.partnerId} to you`);
+})
+
+.post((req, res) => {
     res.statusCode = 403;
     res.end(`POST operation not supported on /partners/${req.params.partnerId}`);
-});
+})
 
-app.put('/partners/:partnerId', (req, res) => {
+.put((req, res) => {
     res.write(`Updating the partner: ${req.params.partnerId}\n`);
     res.end(`Will update the partner: ${req.body.name}
         with description: ${req.body.description}`);
-});
+})
 
-app.delete('/partners/:partnerId', (req, res) => {
+.delete((req, res) => {
     res.end(`Deleting partner: ${req.params.partnerId}`);
 });
-
 
 module.exports = partnerRouter;
